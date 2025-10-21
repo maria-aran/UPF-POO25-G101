@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class Vector {
 
-    //Attributes
+    //Attribute
     private double[] values;
 
     //Methods 
@@ -12,7 +12,7 @@ public class Vector {
         this.values = values;
     }
 
-    // Constructor 2: create array of given size filled with val
+    // Constructor 2: create array of dim size filled with val
     public Vector(int dim, double val) {
         this.values = new double[dim];
         Arrays.fill(this.values, val);
@@ -47,6 +47,7 @@ public class Vector {
 
     // Subtract two vectors
     public Vector subtract(Vector other) {
+
         double[] result = new double[values.length];
         for (int i = 0; i < values.length; i++) {
             result[i] = values[i] - other.values[i];
@@ -55,8 +56,8 @@ public class Vector {
     }
 
     // Multiply two vectors (element-wise)
-    
     public Vector multiply(Vector other) {
+        
         double[] result = new double[values.length];
         for (int i = 0; i < values.length; i++) {
             result[i] = values[i] * other.values[i];

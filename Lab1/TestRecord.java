@@ -5,18 +5,18 @@ public class TestRecord {
 
         System.out.println("Testing Record Class...");
 
-        //Example inputs
+        //Example
         Vector exampleVector = new Vector(new double[]{3, 6, 9});
         double exampleOutput = 12.5;
         Record record = new Record(exampleVector, exampleOutput);
 
-        //Checking values match
+        //Check that values match
         System.out.println("Input correct? " + record.getInput().equals(exampleVector));
         System.out.println("Output correct? " + (record.getOutput() == exampleOutput));
         System.out.println("To string correct? " + record.toString().equals("Record: |Input = [3.0, 6.0, 9.0], Output = 12.5|"));
 
         //Printing values
-        System.out.println("\n=== Record Information ===");
+        System.out.println("\n---Record Information----");
         System.out.println("Input Vector: " + record.getInput());
         System.out.println("Output Value: " + record.getOutput());
         System.out.println("To string: " + record.toString());

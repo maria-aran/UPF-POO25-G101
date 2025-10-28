@@ -3,11 +3,6 @@ package Lab2;
 import Lab1.Record;
 import Lab1.Vector;
 
-/**
- * StandardizedDataset inherits from Dataset and adds
- * the functionality of storing mean and std for inputs and outputs,
- * and transforming records according to standardization.
- */
 public class StandardizedDataset extends Dataset {
 
     private Vector mi; // mean of inputs

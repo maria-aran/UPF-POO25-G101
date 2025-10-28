@@ -1,4 +1,6 @@
+package Lab1;
 import java.util.Arrays;
+
 
 public class Vector {
 
@@ -33,6 +35,10 @@ public class Vector {
     // Set value at index
     public void setValue(int index, double val) {
         values[index] = val;
+    }
+
+    public double[] getElems() {
+        return values;
     }
 
     // Add two vectors

@@ -1,4 +1,5 @@
-package Lab2;
+package Lab1;
+
 public class TestRecord {
     public static void main(String[] args) {
 

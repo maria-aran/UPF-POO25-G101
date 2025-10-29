@@ -5,6 +5,7 @@ import Lab1.Vector;
 
 public class StandardizedDataset extends Dataset {
 
+    //Attributes
     private Vector mi; // mean of inputs
     private Vector si; // std of inputs
     private double mo; // mean of outputs
@@ -17,7 +18,7 @@ public class StandardizedDataset extends Dataset {
         this.si = si;
         this.mo = mo;
         this.so = so;
-        // Initially, the data list is empty; we'll fill it using transform()
+        // Initially the data list is empty; we'll fill it using transform()
     }
 
     /**

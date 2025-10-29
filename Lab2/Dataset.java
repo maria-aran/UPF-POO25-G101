@@ -56,7 +56,7 @@
             return sum / data.size();
         }
 
-        // Compute standard deviation vector of inputs: Standardizes input: (x - mean) / std  → mean=0 , std=1
+        // Compute standard deviation vector of inputs
 
         public Vector stdInput() {
             Vector mean = meanInput();
@@ -103,6 +103,6 @@
 
         // toString
         public String toString() {
-            return "Dataset(dim=" + dim + ", data=" + data + ")";
+            return "Dataset | dim = " + dim + ", data= " + data + "|";
         }
     }

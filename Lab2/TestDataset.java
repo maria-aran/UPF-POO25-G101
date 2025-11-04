@@ -71,6 +71,43 @@
             System.out.println("Standardized Std Input: " + newStdInput);      // ~1
             System.out.println("Standardized Std Output: " + newStdOutput);    // ~1
 
+            // === Testing Normalization ===
+            System.out.println("\n---- Testing NormalizedDataset Class ----");
+
+            NormalizedDataset normalized = dataset.normalize();
+
+            System.out.println("Normalized dataset created? " + (normalized != null));
+
+            Record normTransformed = normalized.transform(r2);
+            System.out.println("Normalized Record: " + normTransformed);
+
+            System.out.println("\nNormalized Dataset Info:");
+            System.out.println(normalized);
+
+            System.out.println("\nVerifying normalization range [0,1]:");
+            for (Record r : normalized.getData()) {
+                Vector input = r.getInput();
+                double output = r.getOutput();
+                
+                for (int i = 0; i < input.getDim(); i++) {
+                    double val = input.getElems()[i];
+                    if (val < 0 || val > 1) {
+                        System.out.println("Input value out of range: " + val);
+                    }
+                }
+                
+                if (output < 0 || output > 1) {
+                    System.out.println("Output value out of range: " + output);
+                }
+            }
+            System.out.println("\nAll records in normalized dataset:");
+            for (int i = 0; i < normalized.getData().size(); i++) {
+                Record normRecord = normalized.getData().get(i);
+                System.out.println("Record " + (i + 1) + ": " + normRecord);
+            }
+            
+            System.out.println("Normalization range check completed!");
+
             System.out.println("\nEverything works!");
         }
     }

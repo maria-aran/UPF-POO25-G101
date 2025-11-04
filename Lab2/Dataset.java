@@ -105,4 +105,37 @@
         public String toString() {
             return "Dataset | dim = " + dim + ", data= " + data + "|";
         }
+        
+        public NormalizedDataset normalize() {
+        if (data.isEmpty()) {
+            return new NormalizedDataset(this, new Vector(dim, 0), new Vector(dim, 1), 0, 1);
+        }
+        
+        double[] minIn = data.get(0).getInput().getElems().clone();
+        double[] maxIn = data.get(0).getInput().getElems().clone();
+        double minOut = data.get(0).getOutput();
+        double maxOut = data.get(0).getOutput();
+        
+        for (Record r : data) {
+            double[] elems = r.getInput().getElems();
+            double output = r.getOutput();
+            
+            for (int i = 0; i < dim; i++) {
+                if (elems[i] < minIn[i]) minIn[i] = elems[i];
+                if (elems[i] > maxIn[i]) maxIn[i] = elems[i];
+            }
+            
+            if (output < minOut) minOut = output;
+            if (output > maxOut) maxOut = output;
+        }
+        
+        NormalizedDataset nd = new NormalizedDataset(this, new Vector(minIn), new Vector(maxIn), minOut, maxOut);
+        
+        for (Record r : data) {
+            Record transformedRecord = nd.transform(r);  
+            nd.addRecord(transformedRecord);            
+        }
+        
+        return nd;
     }
+}

@@ -129,4 +129,16 @@ public class Vector {
     public String toString() {
         return Arrays.toString(values);
     }
+
+    //Lab 3 implementation:
+    public Vector augment() {
+        double[] augmented = new double[values.length + 1];
+
+        for (int i = 0; i < values.length; i++) {
+            augmented[i] = values[i];
+        }
+        augmented[values.length] = 1.0; 
+
+        return new Vector(augmented);
+    }
 }

@@ -129,4 +129,14 @@ public class Vector {
     public String toString() {
         return Arrays.toString(values);
     }
+
+    public Vector augment(){ //we return a vector of size dim+1 
+        int originalDim= values.length;
+        double[] augmentedValues=new double[originalDim+1];
+
+        System.arraycopy(values, 0, augmentedValues, 0, originalDim);
+
+        augmentedValues[originalDim]=1.0;
+        return new Vector(augmentedValues);
+    }
 }

@@ -1,26 +1,40 @@
 package Lab3;
 
-import Lab1.Record;
+
 import Lab1.Vector;
 
-import Lab2.Dataset;
-import Lab2.NormalizedDataset;
-import Lab2.StandardizedDataset;
-
 public class Model {
-    private Vector parameter;
 
-    public Model(int dim){
+    private Vector params;
 
-        double[] values = new double[dim + 1];
-
-        for (int i = 0; i < values.length; i++) {
-            values[i] = 0.0; 
-        }
-        this.parameter = new Vector(values);
+    // Constructor: initialize θ = 0
+    public Model(int dim) {
+        this.params = new Vector(dim + 1, 0.0); // +1 for bias
     }
 
-    public pa
-        
-}
+    // Getter
+    public Vector getparams() {
+        return params;
+    }
 
+    
+    // Predict output for an (augmented) input vector
+    public double predict(Vector Augmented) {
+        return params.dot(Augmented);
+    }
+
+    // Update parameters using gradient descent
+    public void update(Vector gradient, double learningRate) {
+        params = params.subtract(gradient.multiply(learningRate));
+    }
+
+    //method for Moore-Penrose inverse
+    public void setParams(Vector newParams) {
+        this.params = newParams;
+    }
+
+    @Override
+    public String toString() {
+        return "Model parameters: " + params.toString();
+    }
+}

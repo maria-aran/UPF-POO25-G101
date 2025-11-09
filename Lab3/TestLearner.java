@@ -4,49 +4,60 @@ import Lab1.Vector;
 import Lab1.Record;
 import Lab2.Dataset;
 
-public class TestLearner{
-        public static void main() {
+public class TestLearner {
+    public static void main(String[] args) {
 
         System.out.println("Testing Algorithm and SupervisedLearner...");
 
         Dataset ds = new Dataset(2);
+        
+        // Simple linear relationship: y = 2*x1 + 3*x2 + 1
+        ds.addRecord(new Record(new Vector(new double[]{1.0, 1.0}), 6.0));  // 2*1 + 3*1 + 1 = 6
+        ds.addRecord(new Record(new Vector(new double[]{1.0, 2.0}), 9.0));  // 2*1 + 3*2 + 1 = 9
+        ds.addRecord(new Record(new Vector(new double[]{2.0, 1.0}), 8.0));  // 2*2 + 3*1 + 1 = 8
+        ds.addRecord(new Record(new Vector(new double[]{2.0, 2.0}), 11.0)); // 2*2 + 3*2 + 1 = 11
 
-        ds.addRecord(new Record(new Vector(new double[]{1.0, 2.0}), 5.0));
-        ds.addRecord(new Record(new Vector(new double[]{3.0, 4.0}), 11.0));
+        System.out.println("Dataset: n=" + ds.getData().size() + ", d=" + ds.getDim());
 
-        // --- Test Algorithm methods ---
-        Algorithm alg = new Algorithm(0.1, 0.0001);
-        Model model = new Model(ds.getDim());
+        Algorithm alg = new Algorithm(0.01, 0.0001);
 
-        // Check gradient computation
-        Vector grad = alg.gradient(ds, model);
-        System.out.println("Gradient: " + grad);
+        System.out.println("\n=== Testing Gradient Descent ===");
+        SupervisedLearner gdLearner = new SupervisedLearner(ds, alg);
+        gdLearner.solve();
+        System.out.println("Gradient Descent Model: " + gdLearner);
 
-        // Check solve method (gradient descent)
-        Model trainedModel = alg.solve(ds);
-        System.out.println("Trained model: " + trainedModel);
-
-        // --- Test SupervisedLearner methods ---
-        SupervisedLearner learner = new SupervisedLearner(ds, alg);
-
-        // Train the learner
-        learner.solve();
-        System.out.println("Learner model after solve: " + learner);
-
-        // Predict a value
-        Vector testInput = new Vector(new double[]{2.0, 3.0});
-        double prediction = learner.predict(testInput);
-        System.out.println("Prediction for [2.0, 3.0]: " + prediction);
-
-        // Test Moore-Penrose Inverse only
+        // --- Test Moore-Penrose Inverse ---
+        System.out.println("\n=== Testing Moore-Penrose Inverse ===");
         SupervisedLearner mpLearner = new SupervisedLearner(ds, alg);
         mpLearner.solveWithPseudoInverse();
         System.out.println("Moore-Penrose Model: " + mpLearner);
 
-        // Test prediction
-        Vector testInput2 = new Vector(new double[]{2.0, 3.0});
-        double mpPrediction = mpLearner.predict(testInput2);
-        System.out.println("MP Prediction for [2.0, 3.0]: " + mpPrediction);
+        // --- Compare predictions ---
+        System.out.println("\n=== Prediction Comparison ===");
+        Vector testInput = new Vector(new double[]{1.5, 1.5});
+        
+        double gdPrediction = gdLearner.predict(testInput);
+        double mpPrediction = mpLearner.predict(testInput);
+        double expected = 2*1.5 + 3*1.5 + 1; // 3 + 4.5 + 1 = 8.5
+        
+        System.out.println("Test input: " + testInput);
+        System.out.println("Gradient Descent prediction: " + gdPrediction);
+        System.out.println("Moore-Penrose prediction: " + mpPrediction);
+        System.out.println("Expected value: " + expected);
+        System.out.println("GD Error: " + Math.abs(gdPrediction - expected));
+        System.out.println("MP Error: " + Math.abs(mpPrediction - expected));
+
+        // Test on training data to verify both methods
+        System.out.println("\n=== Training Data Verification ===");
+        System.out.println("Input\t\tActual\tGD Pred\tMP Pred");
+        for (Record r : ds.getData()) {
+            Vector input = r.getInput();
+            double actual = r.getOutput();
+            double gdPred = gdLearner.predict(input);
+            double mpPred = mpLearner.predict(input);
+            System.out.printf("%s\t%.1f\t%.3f\t%.3f\n", input, actual, gdPred, mpPred);
+        }
+
         System.out.println("All methods tested successfully!");
     }
 }

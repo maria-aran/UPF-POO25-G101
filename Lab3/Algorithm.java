@@ -18,7 +18,6 @@ public class Algorithm {
 
     //* grad = (1/n) * sum_i x_i * (prediction - y_i)
     public Vector gradient(Dataset ds, Model model) {
-
         int n = ds.getData().size();
         int dimAug = ds.getDim() + 1; // augmented dimension
         Vector grad = new Vector(dimAug, 0.0);

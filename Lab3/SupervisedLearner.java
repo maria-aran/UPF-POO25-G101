@@ -33,9 +33,7 @@ public class SupervisedLearner {
         return model.predict(Aug);
     }
 
-
     //θ = X⁺ y, where X⁺ = (XᵀX)⁻¹ Xᵀ
-
     public void solveWithPseudoInverse() {
         List<Record> data = dataset.getData();
         int n = data.size();

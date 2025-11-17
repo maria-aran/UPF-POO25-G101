@@ -4,7 +4,7 @@ The goal of this project was to compute several classes where linear regression 
 
 The class model works as a container for the parameter vector θ. It has a class's usual methods. Additionally, it also has a method called 'predict', which computes the dot product between the model's params and the provided augmented input vector. And 'update', which executes a single step of gradient descent.
 
-Then, SupervisedLearner Class does the following. Again, it has a class's basic methods. And, additionally, the 'solve' method, which calls the algorithm solve method. Showing clear composition. It also has a 'predict' method. It takes a raw input vector and uses the trained model to predict an output value. It also has a method called 'solveWithPseudoInverse' which I will explain later, as it belongs to the extra point.
+Then, SupervisedLearner Class does the following. Again, it has a class's basic methods. Additionally, the 'solve' method, which calls the algorithm solve method. Showing clear composition. It also has a 'predict' method. It takes a raw input vector and uses the trained model to predict an output value. It also has a method called 'solveWithPseudoInverse' which I will explain later, as it belongs to the extra point.
 
 Finally, we have the Algorithm class. The class has a gradient method that computes the error of the current model and sees how to adjust the parameters to improve it. Basically, the gradient points in the direction that would increase error, so we subtract it during updates to decrease error. This method is called by 'solve' the other method in this class. This method checks how 'wrong' the current model is with the gradient method, as explained previously. So, after, we update the model until the model is barely improving.
 

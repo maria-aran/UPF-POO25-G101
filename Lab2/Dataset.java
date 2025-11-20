@@ -35,7 +35,7 @@
             }
 
             // Compute mean vector of inputs
-                public Vector meanInput() {
+            public Vector meanInput() {
                     if (data.isEmpty()) return new Vector(dim, 0);
 
                     double[] mean = new double[dim];
@@ -57,7 +57,6 @@
             }
 
             // Compute standard deviation vector of inputs
-
             public Vector stdInput() {
                 Vector mean = meanInput();
                 double[] var = new double[dim];

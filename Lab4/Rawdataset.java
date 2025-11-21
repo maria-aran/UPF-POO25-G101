@@ -1,11 +1,9 @@
 package Lab4;
 
-import java.util.ArrayList;
-
 public class RawDataset extends Dataset{
-    
+        
     public RawDataset(int d){
-        super.Dataset(d);
+        super(d);
     }
 
     // Compute mean vector of inputs
@@ -58,24 +56,28 @@ public class RawDataset extends Dataset{
 
     // Create a standardized dataset
     public StandardizedDataset standardize() {
-                Vector meanin = meanInput();
-                Vector stdin = stdInput();
-                double meanout = meanOutput();
-                double stdout = stdOutput();
+        Vector meanin = meanInput();
+        Vector stdin = stdInput();
+        double meanout = meanOutput();
+        double stdout = stdOutput();
 
-                StandardizedDataset sd = new StandardizedDataset(this, meanin, stdin, meanout, stdout);
-                //New Dataset Std using the current instance
+        StandardizedDataset sd = new StandardizedDataset(this, meanin, stdin, meanout, stdout);
 
-                // Transform each record and add to standardized dataset
-                for (Record r : data) {
-                    sd.addRecord(sd.transform(r));
-                }
+        // Transform each record and add to standardized dataset
+        for (Record r : data) {
+            sd.addRecord(sd.transform(r));
+        }
 
-                return sd;
-            }
+        return sd;
+    }
 
     @Override
     public Record transform(Record r) {
+        Vector mi = meanInput();
+        Vector si = stdInput();
+        double mo = meanOutput();
+        double so = stdOutput();
+
         Vector standardizedInput = r.getInput().subtract(mi).divide(si); //Now each input has mean 0 and standard deviation 1
         double standardizedOutput = (r.getOutput() - mo) / so;          //And each output has mean 0 and standard deviation 1
         return new Record(standardizedInput, standardizedOutput);
@@ -83,6 +85,6 @@ public class RawDataset extends Dataset{
 
     @Override
     public double output(double d) {
-        return output;
+        return d;
     }
 }

@@ -11,7 +11,7 @@ public class SupervisedLearner {
     private Algorithm algorithm;
     private Model model;
 
-    // Constructor: dataset and algorithm known, model created empty
+    //Constructor
     public SupervisedLearner(Dataset ds, Algorithm alg) {
         this.dataset = ds;
         this.algorithm = alg;
@@ -25,8 +25,16 @@ public class SupervisedLearner {
 
     // Predict output for a new input (needs augmentation)
     public double predict(Vector input) {
-        Vector Aug = input.augment();
-        return model.predict(Aug);
+        Record dummyRecord = new Record(input, 0.0);
+        Record transformedR = dataset.transform(dummyRecord);
+        
+        Vector transformedI = transformedR.getInput();
+        Vector augmentedI = transformedI.augment();
+        
+        double predictionInTransformedS = model.predict(augmentedI);
+        double predictionInOriginalS = dataset.output(predictionInTransformedS);
+        
+        return predictionInOriginalS;
     }
 
     //θ = X⁺ y, where X⁺ = (XᵀX)⁻¹ Xᵀ

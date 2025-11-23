@@ -10,28 +10,28 @@ public class SupervisedLearner {
     private Dataset dataset;
     private Algorithm algorithm;
     private Model model;
+    private Predictor predictor;
 
     //Constructor
     public SupervisedLearner(Dataset ds, Algorithm alg) {
         this.dataset = ds;
         this.algorithm = alg;
         this.model = new Model(ds.getDim());
-    }
+        this.predictor = alg.predictor;
+    }   
 
     // Train model using algorithm
     public void solve() {
         this.model = algorithm.solve(dataset);
     }
-
-    // Predict output for a new input (needs augmentation)
+    
     public double predict(Vector input) {
         Record dummyRecord = new Record(input, 0.0);
         Record transformedR = dataset.transform(dummyRecord);
-        
         Vector transformedI = transformedR.getInput();
         Vector augmentedI = transformedI.augment();
         
-        double predictionInTransformedS = model.predict(augmentedI);
+        double predictionInTransformedS = predictor.predict(model.getparams(), augmentedI);
         double predictionInOriginalS = dataset.output(predictionInTransformedS);
         
         return predictionInOriginalS;

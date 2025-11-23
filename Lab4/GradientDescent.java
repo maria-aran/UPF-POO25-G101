@@ -6,8 +6,8 @@ public class GradientDescent extends Algorithm {
     private double stoppingCriterion;
 
     // Constructor 
-    public GradientDescent(double learningRate, double stoppingCriterion) {
-        super(learningRate);
+    public GradientDescent(double learningRate, double stoppingCriterion, Predictor p) {
+        super(learningRate, p);
         this.stoppingCriterion = stoppingCriterion;
     }
 
@@ -22,10 +22,9 @@ public class GradientDescent extends Algorithm {
         for (Record r : ds.getData()) {
             Vector Aug = r.getInput().augment();
             double y = r.getOutput();
-            double prediction = model.predict(Aug);
-            double error = prediction - y;
-            // accumulate (1/n) * x_i * error
-            grad = grad.add(Aug.multiply(error / n));
+
+            Vector recordGradient = predictor.computeGradient(model.getparams(), Aug, y);
+            grad = grad.add(recordGradient.multiply(1.0 / n));
         }
         return grad;
     }
@@ -34,10 +33,17 @@ public class GradientDescent extends Algorithm {
         
         Model model = new Model(ds.getDim());
         Vector grad;
+        int iteration = 0;
+        int maxIterations = 5000;
 
         do {
             grad = gradient(ds, model);
             model.update(grad, learningRate);
+            iteration++; 
+
+            if (iteration >= maxIterations) {
+                break;}
+
         } while (grad.norm() > stoppingCriterion);
 
         return model;

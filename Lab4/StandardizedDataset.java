@@ -27,11 +27,12 @@ public class StandardizedDataset extends Dataset {
         double standardizedOutput = (r.getOutput() - mo) / so;          //And each output has mean 0 and standard deviation 1
         return new Record(standardizedInput, standardizedOutput);
     }
+   
     @Override
     public double output(double d){
         return (d*so) + mo;
     }
-    // Simple toString showing statistics
+   
     public String toString() {
         return "StandardizedDataset(meanInput=" + mi + ", stdInput=" + si + ", meanOutput=" + mo + ", stdOutput=" + so + ")";
     }

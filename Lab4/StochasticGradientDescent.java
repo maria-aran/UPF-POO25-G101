@@ -7,8 +7,8 @@ public class StochasticGradientDescent extends Algorithm {
     private int iterations;
     private Random random;
 
-    public StochasticGradientDescent(double lr, int bs, int it){
-        super(lr);
+    public StochasticGradientDescent(double lr, int bs, int it, Predictor p){
+        super(lr, p);
         iterations = it;
         batchSize = bs;
         random = new Random();
@@ -33,22 +33,11 @@ public class StochasticGradientDescent extends Algorithm {
             Vector augmentedInput = record.getInput().augment();
             double actualOutput = record.getOutput();
             
-            // Compute prediction: θ·x_i
-            double prediction = model.predict(augmentedInput);
-            
-            // Compute error: (θ·x_i - y_i)
-            double error = prediction - actualOutput;
-            
-            // Compute gradient for this record: x_i * (θ·x_i - y_i)
-            Vector recordGradient = augmentedInput.multiply(error);
-            
-            // Accumulate to total gradient
+            Vector recordGradient = predictor.computeGradient(model.getparams(), augmentedInput, actualOutput);
             grad = grad.add(recordGradient);
         }
         
-        // Average the gradient over the minibatch: (1/k) * Σ
         grad = grad.divide(actualBatchSize);
-        
         return grad;
     }
 

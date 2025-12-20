@@ -1,0 +1,9 @@
+##Report Lab 5
+
+This lab consisted of implementing the previous code, the linear regression algorithms, but this time in C++.
+
+I had to implement Algorithm, GradientDescent, StochasticGradientDescent, and SupervisedLearner. The functionality was quite clear since I had already done it in the previous lab. 
+
+The most difficult thing was clearly programming in C++, some small details, such, such as using the "= 0"the "= 0" syntax rather than the explicit "abstract" keyword, which doesn't exist in C++. Or not being able to use the super keyword as I was used to. Some things I interesting decision I took were, firstly as indicated on the instructions, creating instances without using the new keyword so I didn't need to do manual memory management. I also used the << operator for all classes for clean output formatting instead of .toString() methods as I was used to.
+
+At the end I made the code work, but I realized I didn't have such a fluent programming as in Java. The algorithm achieved near-perfect predictions with 5.99659 for input [5,1] (expected 6.0), demonstrating only 0.00341 error and effective convergence using the specified learning rate of 0.01. On the other hand, Stochastic Gradient Descent Produced 5.96731 for the same test case with 0.03269 error, showing slightly higher but acceptable variance. So, finally, all lab requirements were met, the code compiles without errors, it produces mathematically correct outputs, demonstrating proper object-oriented design through inheritance and polymorphism, and it provides a functional linear regression. I found very interesting the differences between C++ and Java programming on the specific object-oriented paradigm.
